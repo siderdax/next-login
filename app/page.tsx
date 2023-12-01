@@ -2,7 +2,11 @@
 import { signIn, signOut, useSession } from 'next-auth/react'
 
 export default function Home() {
-  const { data: session } = useSession()
+  const session: any = undefined
+  // const { data: session } = useSession()
+
+  // console.log('page session:')
+  // console.log(session)
 
   if (session) {
     return (
