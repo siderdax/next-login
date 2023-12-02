@@ -1,25 +1,18 @@
-'use client'
-import { signIn, signOut, useSession } from 'next-auth/react'
+import { getIronSession } from 'iron-session'
+import Login from './login'
+import { cookies } from 'next/headers'
 
-export default function Home() {
-  const session: any = undefined
-  // const { data: session } = useSession()
+async function getIronSessionData() {
+  const session = await getIronSession(cookies(), {
+    password: '6PYYdYGKzYp8D9uQCUBTpMEMjRjs0M07',
+    cookieName: 'iron-session-cookie',
+  })
+}
 
-  // console.log('page session:')
-  // console.log(session)
+export default async function Home() {
+  const session = await getIronSessionData()
+  console.log('page session:')
+  console.log(session)
 
-  if (session) {
-    return (
-      <main className="flex min-h-screen flex-col items-center justify-between p-24">
-        <button onClick={() => signOut()}>LogOut</button>
-        {session?.user?.email}
-      </main>
-    )
-  }
-
-  return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <button onClick={() => signIn()}>LogIn</button>
-    </main>
-  )
+  return <Login session={session} />
 }
